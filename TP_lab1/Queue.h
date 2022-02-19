@@ -12,14 +12,13 @@ private:
 	int size_;
 public:
 	Queue();
-	bool empty();
-	int size();
+	bool empty() const;
+	int size() const;
 	int pop();
 	void push(int);
-	int front();
-	int back();
+	int front() const;
+	int back() const;
 	void copy(Queue);
-	void merge(Queue, Queue);
-	~Queue();
+	void merge(Queue*, Queue*);
 };
 #endif QUEUE_H

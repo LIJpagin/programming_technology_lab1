@@ -2,16 +2,17 @@
 using namespace std;
 
 int main() {
-	Queue queue;
+	Queue queue1, queue2;
 
 	for (auto i = 1; i < 6; i++) {
-		queue.push(i);
-		cout << "value = " << queue.back() << " size = " << queue.size() << endl;
+		queue1.push(i);
+		cout << "value = " << queue1.back() << " size = " << queue1.size() << endl;
 	}
 	cout << "==================" << endl;
+	queue2.copy(queue1);
 	for (auto i = 1; i < 6; i++) {
-		cout << "value = " << queue.back() << " size = " << queue.size() << endl;
-		queue.pop();
+		cout << "value = " << queue2.front() << " size = " << queue2.size() << endl;
+		queue2.pop();
 	}
 
 	return 0;
