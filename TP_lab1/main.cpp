@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-	Queue queue1, queue2;
+	Queue queue1, queue2, queue3;
 
 	for (auto i = 1; i < 6; i++) {
 		queue1.push(i);
@@ -10,10 +10,11 @@ int main() {
 	}
 	cout << "==================" << endl;
 	queue2.copy(queue1);
-	for (auto i = 1; i < 6; i++) {
-		cout << "value = " << queue2.front() << " size = " << queue2.size() << endl;
-		queue2.pop();
+	queue3.merge(queue1, queue2);
+	for (auto i = 0; i < 10; i++) {
+		cout << "value = " << queue3.pop() << " size = ";
+		cout << queue3.size() << endl;
 	}
-
+		
 	return 0;
 }

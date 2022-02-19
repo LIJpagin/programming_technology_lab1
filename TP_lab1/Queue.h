@@ -10,6 +10,8 @@ private:
 	};
 	Item* queue_;
 	int size_;
+protected:
+
 public:
 	Queue();
 	bool empty() const;
@@ -19,6 +21,6 @@ public:
 	int front() const;
 	int back() const;
 	void copy(Queue);
-	void merge(Queue*, Queue*);
+	void merge(Queue, Queue);
 };
 #endif QUEUE_H
