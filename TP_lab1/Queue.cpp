@@ -1,10 +1,85 @@
 #include "Queue.h"
+
+Queue::Queue(int value, ...) {
+	if (value < 1)
+		throw new std::exception("Error: The first parameter when calling this constructor must be positive!");
+	head_ = tail_ = nullptr;
+	va_list vl;
+	va_start(vl, value);
+	for (auto i = 0; i < value; i++)
+		push(va_arg(vl, int));
+	va_end(vl);
+}
+
+bool Queue::isEmpty() const {
+	return !((bool)head_);
+}
+
+int Queue::size() const {
+	if (isEmpty()) return 0;
+	Item* temp = head_;
+	int size = 0;
+	while (temp != nullptr)
+		size++, temp = temp->next;
+	return size;
+}
+
+int Queue::pop() {
+	if (isEmpty()) throw new std::exception("Error: The list is empty!");
+	Item* temp = head_;
+	int data = temp->data;
+	head_ = temp->next;
+	delete temp;
+	return data;
+}
+
+void Queue::push(int value) {
+	try {
+		Item* temp = new Item;
+		temp->data = value, temp->next = nullptr;
+		if (!head_) head_ = tail_ = temp;
+		else tail_->next = temp, tail_ = temp;
+	}
+	catch (const std::bad_alloc& e) {
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+}
+
+Item* Queue::front() const {
+	if (isEmpty()) throw new std::exception("Error: The list is empty!");
+	return head_;
+}
+
+Item* Queue::back() const {
+	if (isEmpty()) throw new std::exception("Error: The list is empty!");
+	return tail_;
+}
+
+Queue Queue::copy() {
+	Queue queue;
+	if (isEmpty()) return queue;
+	Item* temp = head_;
+	do queue.push(temp->data), temp = temp->next;
+	while (temp != NULL);
+	return queue;
+}
+
+Queue Queue::merge(Queue that) {
+	Queue result = this->copy();
+	while (!that.isEmpty())
+		result.push(that.pop());
+	return result;
+}
+
 int* Queue::getArray() const {
 	int* array = nullptr;
+	if (isEmpty()) return array;
 	try {
-		array = new int[size_];
-		for (int i = 0; i < size_; i++)
-			array[i] = queue_[i].value;
+		array = new int[size()];
+		Item* temp = head_;
+		auto counter = 0;
+		while (temp != nullptr)
+			array[counter++] = temp->data, temp = temp->next;
 	}
 	catch (const std::bad_alloc& e) {
 		std::cout << "Error: " << e.what() << std::endl;
@@ -12,155 +87,71 @@ int* Queue::getArray() const {
 	return array;
 }
 
-bool Queue::empty() const {
-	return !((bool)size_);
-}
-
-int Queue::size() const {
-	return size_;
-}
-
-int Queue::pop() {
-	if (empty())
-		throw new std::exception("Error: The queue is empty!");
-	try {
-		Item* temp = queue_;
-		queue_ = new Item[size_ - 1];
-		for (int i = 1; i < size_; i++)
-			queue_[i - 1] = temp[i];
-		size_--;
-		int value = temp[0].value;
-		delete[] temp;
-		return value;
-	}
-	catch (const std::bad_alloc& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-}
-
-void Queue::push(int value) {
-	Item* temp = queue_;
-	try {
-		queue_ = new Item[size_ + 1];
-		for (int i = 0; i < size_; i++)
-			queue_[i] = temp[i];
-		queue_[size_].value = value;
-		queue_[size_].prev = size_ ? &queue_[size_ - 1] : nullptr;
-		size_++;
-		delete[] temp;
-	}
-	catch (const std::bad_alloc& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-}
-
-int Queue::front() const {
-	if (empty())
-		throw new std::exception("Error: The queue is empty!");
-	return queue_[0].value;
-}
-
-int Queue::back() const {
-	if (empty())
-		throw new std::exception("Error: The queue is empty!");
-	return queue_[size_ - 1].value;
-}
-
-void Queue::copy(const Queue& that) {
-	if (that.empty())
-		throw new std::exception("Error: The copied array is empty!");
-
-	try {
-		delete[] this->queue_;
-		this->size_ = that.size_;
-		this->queue_ = new Item[this->size_];
-		for (auto i = 0; i < that.size_; i++)
-			this->queue_[i] = that.queue_[i];
-	}
-	catch (const std::bad_alloc& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-}
-
-void Queue::merge(Queue first, Queue second) {
-	try {
-		if (this->queue_ == first.queue_) {
-			Item* temp = this->queue_;
-			this->queue_ = new Item[first.size_ + second.size_];
-			auto counter = 0;
-			for (; counter < this->size_; counter++)
-				this->queue_[counter] = temp[counter];
-			for (; counter < this->size_ + second.size_; counter++)
-				this->queue_[counter] = second.queue_[counter - this->size_];
-			this->size_ = this->size_ + second.size_;
-			delete[] temp;
-		}
-		else if (this->queue_ == second.queue_) {
-			Item* temp = this->queue_;
-			this->queue_ = new Item[first.size_ + second.size_];
-			auto counter = 0;
-			for (; counter <first.size_; counter++)
-				this->queue_[counter] = first.queue_[counter];
-			for (; counter < first.size_ + this->size_; counter++)
-				this->queue_[counter] = temp[counter - first.size_];
-			this->size_ = first.size_ + this->size_;
-			delete[] temp;
-		}
-		else {
-			delete[] this->queue_;
-			this->queue_ = new Item[first.size_ + second.size_];
-			auto counter = 0;
-			for (; counter < first.size_; counter++)
-				this->queue_[counter] = first.queue_[counter];
-			for(; counter < first.size_ + second.size_; counter++)
-				this->queue_[counter] = second.queue_[counter - first.size_];
-			this->size_ = first.size_ + second.size_;
-		}
-	}
-	catch (const std::bad_alloc& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-}
-
-void Queue::clear() {
-	this->size_ = 0;
-	if (this->queue_)
-		delete[] this->queue_;
-}
-
 std::ostream& operator<< (std::ostream& out, const Queue& queue) {
-	int* array = new int[queue.size()];
-	array = queue.getArray();
-	for (int i = 0; i < queue.size(); i++)
+	int* array = queue.getArray();
+	if (!array) {
+		out << "The queue is empty";
+		return out;
+	}
+	int size = queue.size();
+	for (auto i = 0; i < size; i++)
 		out << array[i] << " ";
 	return out;
 }
 
 Queue::Queue(const Queue& that) {
-	this->size_ = that.size_;
-	this->queue_ = new Item[this->size_];
-	for (auto i = 0; i < this->size_; i++)
-		this->queue_[i] = that.queue_[i];
+	this->head_ = this->tail_ = nullptr;
+	if (that.isEmpty()) return;
+	Item* temp = that.head_;
+	while (temp != nullptr) {
+		this->push(temp->data);
+		temp = temp->next;
+	}
 }
 
 Queue& Queue::operator= (const Queue& that) {
 	if (this == &that) return *this;
-	if (this->size_) delete[] this->queue_;
-	this->size_ = that.size_;
-	this->queue_ = new Item[this->size_];
-	for (auto i = 0; i < this->size_; i++)
-		this->queue_[i] = that.queue_[i];
+	this->clear();
+	if (that.isEmpty()) {
+		this->head_ = this->tail_ = nullptr;
+		return *this;
+	}
+	Item* temp = that.head_;
+	while (temp != nullptr)
+		this->push(temp->data), temp = temp->next;
 	return *this;
 }
 
 Queue operator+ (const Queue& q1, const Queue& q2) {
 	Queue queue;
-	queue.size_ = q1.size_ + q2.size_;
-	queue.queue_ = new Item[queue.size_];
-	auto counter = 0;
-	for (; counter < q1.size_; counter++)
-		queue.queue_[counter] = q1.queue_[counter];
-	for (; counter < queue.size_; counter++)
-		queue.queue_[counter] = q2.queue_[counter - q1.size_];
+	Item* temp = q1.head_;
+	while (temp != nullptr)
+		queue.push(temp->data), temp = temp->next;
+	temp = q2.head_;
+	while (temp != nullptr)
+		queue.push(temp->data), temp = temp->next;
 	return queue;
+}
+
+bool operator== (const Queue& q1, const Queue& q2) {
+	if (q1.size() != q2.size()) return false;
+	Item* temp1 = q1.head_, * temp2 = q2.head_;
+	while (temp1 != nullptr || temp2 != nullptr) {
+		if (temp1->data != temp2->data) return false;
+		temp1 = temp1->next, temp2 = temp2->next;
+	}
+	return true;
+}
+
+void Queue::clear() {
+	while (head_ != tail_) {
+		Item* temp = head_;
+		head_ = temp->next;
+		delete temp;
+	}
+	if (head_ != nullptr) {
+		Item* temp = head_;
+		delete temp;
+		head_ = tail_ = nullptr;
+	}
 }

@@ -1,6 +1,7 @@
 #include <string>
 #include <locale>
 
+#include "Queue.h"
 #include "Queue1.h"
 //#include "Queue2.h"
 //#include "Queue3.h"
@@ -86,3 +87,7 @@ int main() {
 	}
 }
 
+//int main() {
+//	Queue queue(5, 1, 2, 3, 4, 5);
+//	std::cout << queue << endl;
+//}

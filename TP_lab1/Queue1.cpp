@@ -1,41 +1,37 @@
 #include "Queue1.h"
+using namespace std;
 
 void Queue1::push_UI() {
 	system("cls");
-	std::cout << "Введите значение для добавления в очередь: ";
-	std::string str;
-	std::cin >> str;
-	this->push(atoi(str.c_str()));
-	std::cout << "В очередь добавлено значение: " << this->back() << std::endl;
-	std::cout << "Размер очереди: " << this->size() << std::endl;
-	this->print_UI();
+	cout << "Введите значение для добавления в очередь: ";
+	int num;
+	cin >> num, push(num);
+	cout << "В очередь добавлено значение: " << back() << endl;
+	cout << "Размер очереди: " << size() << endl;
+	print_UI();
 	system("pause");
 }
 
 void Queue1::pop_UI() {
 	system("cls");
-	if (empty()) {
-		std::cout << "Очередь пуста!" << std::endl;
+	if (isEmpty()) {
+		cout << "Очередь пуста!" << endl;
 		system("pause");
 		return;
 	}
-	std::cout << "Из очереди извлечено значение: " << pop() << std::endl;
-	std::cout << "Размер очереди: " << size() << std::endl;
+	cout << "Из очереди извлечено значение: " << pop() << endl;
+	cout << "Размер очереди: " << size() << endl;
 	print_UI();
 	system("pause");
 }
 
 void Queue1::print_UI() const {
-	if (empty()) {
-		std::cout << "Очередь пуста!" << std::endl;
+	if (isEmpty()) {
+		cout << "Очередь пуста!" << endl;
 		system("pause");
 		return;
 	}
-	int* arr = getArray();
-	std::cout << "Вывод очереди: ";
-	for (auto i = 0; i < size(); i++)
-		std::cout << arr[i] << " ";
-	std::cout << std::endl;
+	cout << "Вывод очереди: " << this << endl;
 }
 
 void Queue1::task() {
@@ -47,23 +43,22 @@ void Queue1::copy_UI() {
 	system("cls");
 	Queue1 temp;
 	temp.fillQueue();
-	copy(temp);
 	temp.clear();
-	std::cout << "Очередь скопирована" << std::endl;
+	cout << "Очередь скопирована" << endl;
 	system("pause");
 }
 
 void Queue1::merge_UI() {
 	//system("cls");
-	//std::string in;
+	//string in;
 	//while (in.empty()) {
 	//	system("cls");
-	//	std::cout << "Выберите как провести слияние:\n";
-	//	std::cout << " 1 – новая очеред + текущая очередь\n";
-	//	std::cout << " 2 – текущая очередь + новая очередь\n";
-	//	std::cout << "\n > ";
+	//	cout << "Выберите как провести слияние:\n";
+	//	cout << " 1 – новая очеред + текущая очередь\n";
+	//	cout << " 2 – текущая очередь + новая очередь\n";
+	//	cout << "\n > ";
 
-	//	std::cin >> in;
+	//	cin >> in;
 	//	if (in[0] == '1') merge(fillQueue(), this);
 	//	else if (in[0] == '2') merge(queue1, queue2);
 	//	else {
@@ -80,21 +75,22 @@ void Queue1::merge_UI() {
 void Queue1::clear_UI() {
 	system("cls");
 	clear();
-	std::cout << "Очередь очищена" << std::endl;
+	cout << "Очередь очищена" << endl;
 	system("pause");
 }
 
-Queue& Queue1::fillQueue() {
+Queue1& Queue1::fillQueue() {
 	system("cls");
-	std::cout << "Вводите значения, чтобы создать новую очередь\n" <<
-		"Для завершения ввода, нажмите Ctrl + Z, затем Enter" << std::endl;
-	Queue temp;
-	std::string str;
+	cout << "Вводите значения, чтобы создать новую очередь\n" <<
+		"Для завершения ввода, нажмите Ctrl + Z, затем Enter" << endl;
+	Queue1 temp;
+	string str;
 	while (str[0] != '^') {
-		std::cin >> str;
+		cin >> str;
 		temp.push(atoi(str.c_str()));
+		str.clear();
 	}
-	std::cout << "Размер очереди: " << size() << std::endl;
+	cout << "Размер очереди: " << size() << endl;
 	print_UI();
 	return temp;
 }
