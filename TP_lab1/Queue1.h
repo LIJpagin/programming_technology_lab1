@@ -13,6 +13,5 @@ public:
 	void copy_UI();
 	void merge_UI();
 	void clear_UI();
-	Queue& fillQueue();
 };
 #endif QUEUE1_H

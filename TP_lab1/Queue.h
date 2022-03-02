@@ -28,6 +28,7 @@ public:
 	Item* front() const;
 	Item* back() const;
 	int* getArray() const;
+	void random(int = 10, int = -100, int = 100);
 
 	Queue& operator = (const Queue& that);
 	friend Queue operator+ (const Queue&, const Queue&);

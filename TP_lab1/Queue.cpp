@@ -87,6 +87,16 @@ int* Queue::getArray() const {
 	return array;
 }
 
+void Queue::random(int size, int min, int max) {
+	if (size < 1)
+		throw new std::exception("Error: The size parameter when calling the random() method must be positive!");
+	clear();
+	srand(time(NULL));
+	size = rand() % (size + 1);
+	for (auto i = 0; i < size; i++)
+		push(rand() % (max - min + 1) + min);
+}
+
 std::ostream& operator<< (std::ostream& out, const Queue& queue) {
 	int* array = queue.getArray();
 	if (!array) {

@@ -21,7 +21,7 @@ int main() {
 		cout << " 3 – public\n";
 		cout << "\n > ";
 
-		getline(cin, in);
+		cin >> in;
 		if (in[0] >= 49 && in[0] <= 51) active = in[0] - 48;
 		else {
 			cout << "\n Что-то не то . . .\n Попробуйте еще раз\n ";
@@ -48,7 +48,7 @@ int main() {
 			cout << " 8 – Выход из программы\n";
 			cout << "\n > ";
 
-			getline(cin, in);
+			cin >> in;
 			switch (in[0]) {
 			case '1':
 				queue1.push_UI();
@@ -57,7 +57,9 @@ int main() {
 				queue1.pop_UI();
 				break;
 			case '3': 
+				system("cls");
 				queue1.print_UI();
+				system("pause");
 				break;
 			case '4':
 				queue1.task();
@@ -86,8 +88,3 @@ int main() {
 		in.clear();
 	}
 }
-
-//int main() {
-//	Queue queue(5, 1, 2, 3, 4, 5);
-//	std::cout << queue << endl;
-//}
