@@ -1,10 +1,8 @@
 #include <string>
 #include <locale>
-
-#include "Queue.h"
 #include "Queue1.h"
-//#include "Queue2.h"
-//#include "Queue3.h"
+#include "Queue2.h"
+#include "Queue3.h"
 
 using namespace std;
 
@@ -32,8 +30,8 @@ int main() {
 	in.clear();
 
 	Queue1 queue1; // private
-	//Queue2 queue2; // protected
-	//Queue3 queue3; // public
+	Queue2 queue2; // protected
+	Queue3 queue3; // public
 
 	while (true) {
 		while (in.empty()) {
@@ -44,36 +42,50 @@ int main() {
 			cout << " 4 Ц ¬ыполнение расчета по варианту\n";
 			cout << " 5 Ц —оздание копии очереди\n";
 			cout << " 6 Ц —ли€ние двух очередей\n";
-			cout << " 7 - ќчистить очередь\n";
-			cout << " 8 Ц ¬ыход из программы\n";
+			cout << " 7 Ц ¬ыход из программы\n";
 			cout << "\n > ";
 
 			cin >> in;
 			switch (in[0]) {
 			case '1':
-				queue1.push_UI();
+				system("cls");
+				active == 1 ? queue1.print() : (active == 2 ? queue2.print() : queue3.print());
+				cout << "¬ведите значение дл€ добавлени€ в очередь: ";
+				int num;
+				cin >> num;
+				active == 1 ? queue1.push(num) : (active == 2 ? queue2.push(num) : queue3.push(num));
+				cout << "¬ очередь добавлено значение: " << num << endl;
+				active == 1 ? queue1.print() : (active == 2 ? queue2.print() : queue3.print());
+				system("pause");
 				break;
 			case '2':
-				queue1.pop_UI();
+				system("cls");
+				if (active == 1 ? queue1.isEmpty() : (active == 2 ? queue2.isEmpty() : queue3.isEmpty())) {
+					cout << "ќчередь пуста!" << endl;
+					system("pause");
+					break;
+				}
+				active == 1 ? queue1.print() : (active == 2 ? queue2.print() : queue3.print());
+				cout << "»з очереди извлечено значение: " <<
+					(active == 1 ? queue1.pop() : (active == 2 ? queue2.pop() : queue3.pop())) << endl;
+				active == 1 ? queue1.print() : (active == 2 ? queue2.print() : queue3.print());
+				system("pause");
 				break;
 			case '3': 
 				system("cls");
-				queue1.print_UI();
+				active == 1 ? queue1.print() : (active == 2 ? queue2.print() : queue3.print());
 				system("pause");
 				break;
 			case '4':
 				queue1.task();
 				break;
 			case '5':
-				queue1.copy_UI();
+				active == 1 ? queue1.copy() : (active == 2 ? queue2.copy() : queue3.copy());
 				break;
 			case '6':
-				queue1.merge_UI();
+				active == 1 ? queue1.merge() : (active == 2 ? queue2.merge() : queue3.merge());
 				break;
 			case '7':
-				queue1.clear_UI();
-				break;
-			case '8':
 				system("cls");
 				return 0;
 				break;

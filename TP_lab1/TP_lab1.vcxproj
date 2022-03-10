@@ -142,10 +142,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Queue1.cpp" />
+    <ClCompile Include="Queue2.cpp" />
+    <ClCompile Include="Queue3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Queue1.h" />
+    <ClInclude Include="Queue2.h" />
+    <ClInclude Include="Queue3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

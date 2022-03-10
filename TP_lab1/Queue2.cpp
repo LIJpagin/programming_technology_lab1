@@ -1,34 +1,7 @@
-#include "Queue1.h"
+#include "Queue2.h"
 using namespace std;
 
-void Queue1::push(int value) {
-	Queue::push(value);
-}
-
-int Queue1::pop() {
-	return Queue::pop();
-}
-
-void Queue1::print() const {
-	cout << "Вывод очереди: ";
-	if (isEmpty()) {
-		cout << "очередь пуста!" << endl;
-		return;
-	}
-	int* array = getArray();
-	int size = this->size();
-	for (auto i = 0; i < size; i++)
-		cout << array[i] << " ";
-	cout << endl;
-}
-
-void Queue1::task() {
-	system("cls");
-
-	system("pause");
-}
-
-void Queue1::copy() {
+void Queue2::copy() {
 	system("cls");
 	this->print();
 	this->clear();
@@ -43,7 +16,7 @@ void Queue1::copy() {
 	system("pause");
 }
 
-void Queue1::merge() {
+void Queue2::merge() {
 	system("cls");
 	this->print();
 	Queue queue;
@@ -57,6 +30,15 @@ void Queue1::merge() {
 	system("pause");
 }
 
-bool Queue1::isEmpty() const {
-	return Queue::isEmpty();
+void Queue2::print() const {
+	cout << "Вывод очереди: ";
+	if (isEmpty()) {
+		cout << "очередь пуста!" << endl;
+		return;
+	}
+	int* array = getArray();
+	int size = this->size();
+	for (auto i = 0; i < size; i++)
+		cout << array[i] << " ";
+	cout << endl;
 }
