@@ -46,12 +46,13 @@ int main() {
 			cout << "\n > ";
 
 			cin >> in;
+			float sum = 0;
+			int counter = 0, num = 0;
 			switch (in[0]) {
 			case '1':
 				system("cls");
 				active == 1 ? queue1.print() : (active == 2 ? queue2.print() : queue3.print());
 				cout << "Введите значение для добавления в очередь: ";
-				int num;
 				cin >> num;
 				active == 1 ? queue1.push(num) : (active == 2 ? queue2.push(num) : queue3.push(num));
 				cout << "В очередь добавлено значение: " << num << endl;
@@ -77,7 +78,25 @@ int main() {
 				system("pause");
 				break;
 			case '4':
-				queue1.task();
+				system("cls");
+				if (active == 1 ? queue1.isEmpty() : (active == 2 ? queue2.isEmpty() : queue3.isEmpty())) {
+					cout << "Очередь пуста!" << endl;
+					system("pause");
+					break;
+				}
+				active == 1 ? queue1.print() : (active == 2 ? queue2.print() : queue3.print());
+				cout << "Подсчет среднего арифметического для элементов с нечетным порядковым номером" << endl;
+				while (!(active == 1 ? queue1.isEmpty() : (active == 2 ? queue2.isEmpty() : queue3.isEmpty()))) {
+					if (counter % 2 == 0)
+						sum += active == 1 ? queue1.pop() : (active == 2 ? queue2.pop() : queue3.pop());
+					else
+						active == 1 ? queue1.pop() : (active == 2 ? queue2.pop() : queue3.pop());
+					counter++;
+				}
+				counter /= 2;
+				sum /= counter;
+				cout << "Результат: " << sum << endl;
+				system("pause");
 				break;
 			case '5':
 				active == 1 ? queue1.copy() : (active == 2 ? queue2.copy() : queue3.copy());

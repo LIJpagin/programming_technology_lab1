@@ -9,7 +9,6 @@ public:
 	void push(int);
 	int pop();
 	void print() const;
-	void task();
 	void copy();
 	void merge();
 	bool isEmpty() const;

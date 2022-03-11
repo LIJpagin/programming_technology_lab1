@@ -22,12 +22,6 @@ void Queue1::print() const {
 	cout << endl;
 }
 
-void Queue1::task() {
-	system("cls");
-
-	system("pause");
-}
-
 void Queue1::copy() {
 	system("cls");
 	this->print();
